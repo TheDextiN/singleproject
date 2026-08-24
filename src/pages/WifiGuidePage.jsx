@@ -17,6 +17,7 @@ export default function WifiGuidePage() {
       <div className="wifi-layout">
         <aside>
           <span>Choose your access</span>
+          {/* This loop creates one selector for each Wi-Fi audience in the data file. */}
           {Object.entries(wifiGuides).map(([id, item]) => (
             <button
               className={audience === id ? 'active' : ''}
@@ -42,6 +43,7 @@ export default function WifiGuidePage() {
           <h2>{guide.label}</h2>
           <p>{guide.intro}</p>
           <ol>
+            {/* This loop numbers and displays every instruction for the active guide. */}
             {guide.steps.map((step, index) => (
               <li key={step}>
                 <span>{String(index + 1).padStart(2, '0')}</span>

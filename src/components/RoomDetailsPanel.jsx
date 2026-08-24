@@ -1,5 +1,5 @@
 /** Detailed third-column panel shown after a room is selected. */
-export default function RoomDetailsPanel({ roomNumber, floor, room, accessibleRoute, onClose }) {
+export default function RoomDetailsPanel({ roomNumber, floor, room, onClose }) {
   return (
     <aside className="room-panel">
       <article className="room-details">
@@ -21,7 +21,7 @@ export default function RoomDetailsPanel({ roomNumber, floor, room, accessibleRo
 
         <p className="room-description">{room.detail}</p>
         <div className="room-features">
-          <span>{accessibleRoute ? '♿ Step-free route selected' : '♿ Accessible via lift'}</span>
+          <span>♿ Accessible via lift</span>
           <span>⌖ Located on Level {floor}</span>
         </div>
 

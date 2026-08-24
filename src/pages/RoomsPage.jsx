@@ -9,9 +9,9 @@ export default function RoomsPage() {
   const [floor, setFloor] = useState(1)
   const [query, setQuery] = useState('')
   const [selectedRoom, setSelectedRoom] = useState(null)
-  const [accessibleRoute, setAccessibleRoute] = useState(false)
 
   const normalizedQuery = query.trim().toLowerCase()
+  // filter loops through searchable rooms and keeps only text matches.
   const searchResults = normalizedQuery
     ? searchableRooms.filter((room) => (
         `${room.name} ${room.code} ${room.type} level ${room.floor}`
@@ -20,12 +20,14 @@ export default function RoomsPage() {
       )).slice(0, 6)
     : []
 
+  // A search result may be on another floor, so update floor and room together.
   const selectSearchResult = (room) => {
     setFloor(room.floor)
     setSelectedRoom(room.number)
     setQuery('')
   }
 
+  // Clear the old selection when switching plans to avoid showing stale details.
   const changeFloor = (level) => {
     setFloor(level)
     setSelectedRoom(null)
@@ -56,6 +58,7 @@ export default function RoomsPage() {
 
         {searchResults.length > 0 && (
           <div className="search-results">
+            {/* This loop renders the filtered room matches below the search field. */}
             {searchResults.map((room) => (
               <button key={room.number} onClick={() => selectSearchResult(room)}>
                 <span><b>{room.name}</b><small>{room.code} · Level {room.floor}</small></span>
@@ -68,6 +71,7 @@ export default function RoomsPage() {
         <div className="floor-select">
           <span>Choose a level</span>
           <div>
+            {/* This loop creates one level button for every available floor plan. */}
             {Object.keys(floorMarkers).map((level) => (
               <button
                 className={floor === Number(level) ? 'active' : ''}
@@ -82,6 +86,7 @@ export default function RoomsPage() {
 
         <div className="places">
           <h2>Level {floor} rooms and labs</h2>
+          {/* This loop lists only rooms belonging to the currently selected level. */}
           {floorMarkers[floor].map(([roomNumber]) => (
             <button
               className={selectedRoom === roomNumber ? 'active' : ''}
@@ -94,14 +99,6 @@ export default function RoomsPage() {
           ))}
         </div>
 
-        <label className="accessible-toggle">
-          <input
-            type="checkbox"
-            checked={accessibleRoute}
-            onChange={(event) => setAccessibleRoute(event.target.checked)}
-          />
-          <span><b>Accessible route</b><small>Use lifts and step-free paths</small></span>
-        </label>
       </aside>
 
       <div className="map-panel">
@@ -125,7 +122,6 @@ export default function RoomsPage() {
           roomNumber={selectedRoom}
           floor={floor}
           room={rooms[selectedRoom]}
-          accessibleRoute={accessibleRoute}
           onClose={() => setSelectedRoom(null)}
         />
       )}

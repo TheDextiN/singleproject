@@ -48,7 +48,10 @@ export const rooms = {
   15: { name: 'IT Teaching Lab', code: 'N79 5.17', type: 'Teaching laboratory', image: level5Plan, detail: 'A technology-rich teaching room for software, computing and collaborative class work.' },
 }
 
-/** Flattened room records make directory searching straightforward. */
+/**
+ * flatMap visits every floor, while the inner map converts each marker into
+ * a searchable room record. The final result is one flat array of all rooms.
+ */
 export const searchableRooms = Object.entries(floorMarkers).flatMap(
   ([level, markers]) => markers.map(([number]) => ({
     number,

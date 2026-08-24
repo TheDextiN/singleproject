@@ -48,6 +48,8 @@ npm.cmd run build
 
 - Navigation uses URL hashes such as `#navigate`, so it works without a server-side router.
 - Login is a visual prototype. It does not send or store credentials and must be connected to an approved Griffith authentication service before release.
+- The working student demo uses `s123456` with password `123456`. These values are visible in front-end code and are only for classroom demonstration.
+- A successful demo login saves only an authentication flag in `localStorage`, so it remains active across pages and browser restarts until Logout is selected.
 - Room names, references and hotspot positions should be checked against approved N79 building records before production use.
 - Current room visuals are floor-plan references. Replace them with approved room photographs in `src/assets/rooms/` when available.
 - The maps are for room discovery only, not emergency evacuation.

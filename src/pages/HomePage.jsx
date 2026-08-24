@@ -2,7 +2,7 @@ import campusBackground from '../assets/images/griffith-campus.jpg'
 import ArrowIcon from '../components/ArrowIcon'
 
 /** Simple starting point that sends visitors to the project's main tools. */
-export default function HomePage({ navigate }) {
+export default function HomePage({ navigate, isLoggedIn }) {
   return (
     <section
       className="home-stage"
@@ -30,9 +30,10 @@ export default function HomePage({ navigate }) {
             <b>About N79</b>
             <span>Learn about the building →</span>
           </button>
-          <button onClick={() => navigate('login')}>
-            <b>Login</b>
-            <span>Student, staff or guest →</span>
+          {/* The account shortcut reflects the same login state as the header. */}
+          <button onClick={() => navigate(isLoggedIn ? 'student' : 'login')}>
+            <b>{isLoggedIn ? 'My profile' : 'Login'}</b>
+            <span>{isLoggedIn ? 'Open your student area →' : 'Student, staff or guest →'}</span>
           </button>
         </div>
       </div>

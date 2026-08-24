@@ -2,15 +2,25 @@ import { useState } from 'react'
 import griffithLogo from '../assets/branding/griffith-university-logo.svg'
 
 /** Main navigation shared by every page. */
-export default function Header({ navigate, page }) {
+export default function Header({ navigate, page, isLoggedIn, onLogout }) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [profileOpen, setProfileOpen] = useState(false)
 
   // Closing the mobile menu here means every internal link behaves consistently.
   const goTo = (target) => {
     setMenuOpen(false)
+    setProfileOpen(false)
     navigate(target)
   }
 
+  // Logging out also closes both header menus before App removes the account.
+  const handleLogout = () => {
+    setMenuOpen(false)
+    setProfileOpen(false)
+    onLogout()
+  }
+
+  // This helper adds the active underline to the link for the current page.
   const navClass = (target) =>
     page === target ? 'active text-link' : 'text-link'
 
@@ -48,7 +58,39 @@ export default function Header({ navigate, page }) {
         >
           Nathan campus
         </a>
-        <button className="nav-login" onClick={() => goTo('login')}>Login</button>
+        {isLoggedIn ? (
+          <div className="profile-menu-wrap">
+            <button
+              className="profile-button"
+              type="button"
+              aria-label="Open profile menu"
+              aria-expanded={profileOpen}
+              onClick={() => setProfileOpen((open) => !open)}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4.5 21c.8-4.2 3.3-6.3 7.5-6.3s6.7 2.1 7.5 6.3" />
+              </svg>
+              <span className="profile-name">s123456</span>
+              <span className="profile-chevron" aria-hidden="true">⌄</span>
+            </button>
+
+            {profileOpen && (
+              <div className="profile-dropdown">
+                <button onClick={() => goTo('student')}>
+                  <span className="dropdown-icon" aria-hidden="true">○</span>
+                  <span><b>Profile</b><small>View student area</small></span>
+                </button>
+                <button className="logout-option" onClick={handleLogout}>
+                  <span className="dropdown-icon" aria-hidden="true">↪</span>
+                  <span><b>Logout</b><small>End this session</small></span>
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <button className="nav-login" onClick={() => goTo('login')}>Login</button>
+        )}
       </nav>
     </header>
   )

@@ -12,6 +12,7 @@ export default function FloorMap({ floor, selectedRoom, onSelectRoom }) {
         alt={`N79 Level ${floor} floor plan showing numbered rooms and laboratories`}
       />
 
+      {/* This loop places every clickable room marker at its saved x/y position. */}
       {floorMarkers[floor].map(([roomNumber, x, y]) => (
         <button
           key={roomNumber}

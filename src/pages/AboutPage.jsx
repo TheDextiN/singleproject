@@ -48,6 +48,7 @@ export default function AboutPage({ navigate }) {
       </section>
 
       <section className="feature-stats">
+        {/* This loop turns each building statistic into one summary card. */}
         {buildingStats.map(([value, label]) => (
           <article key={value}><strong>{value}</strong><p>{label}</p></article>
         ))}
@@ -59,6 +60,7 @@ export default function AboutPage({ navigate }) {
           <span className="section-tag">Inside N79</span>
           <h2>Designed to test, make and simulate.</h2>
           <ul>
+            {/* This loop keeps repeated feature markup consistent and easy to edit. */}
             {buildingFeatures.map(([title, description]) => (
               <li key={title}><b>{title}</b><span>{description}</span></li>
             ))}

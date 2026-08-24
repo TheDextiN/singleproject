@@ -14,6 +14,7 @@ function Header({ navigate, page }) {
     <nav className={open ? 'open' : ''} aria-label="Main navigation">
       <button className={page === 'home' ? 'active text-link' : 'text-link'} onClick={() => go('home')}>Home</button>
       <button className={page === 'about' ? 'active text-link' : 'text-link'} onClick={() => go('about')}>About N79</button>
+      <button className={page === 'navigate' ? 'active text-link' : 'text-link'} onClick={() => go('navigate')}>Navigate N79</button>
       <a href="https://www.griffith.edu.au/about-griffith/campuses-facilities/nathan" target="_blank" rel="noreferrer">Nathan campus</a>
       <button className="nav-login" onClick={() => go('login')}>Student login</button>
     </nav>
@@ -34,7 +35,7 @@ function Home({ navigate }) {
       <p className="intro">Explore N79 at your own pace — no staff-led tour or booking required. Choose how you&apos;re visiting today to get started.</p>
       <h2>Continue as</h2><div className="options">{types.map(([id,title,description]) => <button className={selected === id ? 'selected' : ''} key={id} onClick={() => choose(id)}><span><strong>{title}</strong><small>{description}</small></span><Arrow/></button>)}</div>
       <p className="privacy">No account or personal details needed. Your choice only personalises this tour experience.</p>
-      {selected && selected !== 'student' && <button className="primary full" onClick={() => navigate('about')}>Start self-tour <Arrow/></button>}
+      {selected && selected !== 'student' && <button className="primary full" onClick={() => navigate('navigate')}>Open indoor map <Arrow/></button>}
     </div>
   </section>
 }
@@ -69,11 +70,44 @@ function About({ navigate }) {
   </div>
 }
 
+const floorData = {
+  0: [['Main entrance','Arrival Plaza'],['High-bay laboratory','N79 0.10'],['Engineering labs','Level 0'],['Accessible toilets','Central core']],
+  1: [['Lecture theatre','N79 1.05'],['Aviation learning','Level 1'],['Student lounge','East wing'],['Meeting rooms','West wing']],
+  2: [['Planning studio','N79 2.04'],['Design studios','East wing'],['Makerspace','West wing'],['Student kitchen','Central core']],
+  3: [['Industry zone','Level 3'],['Collaboration spaces','East wing'],['L.J. Harvey pottery','Level 3'],['Rooftop garden access','North core']],
+  4: [['Cyber security lab','N79 4.10'],['IT learning rooms','N79 4.16–4.17'],['Simulation studio','West wing'],['Computer labs','East wing']],
+  5: [['Science super lab','Level 5'],['Aviation simulation','Level 5'],['Research spaces','East wing'],['Staff workspaces','West wing']],
+}
+
+function FloorMap({ floor, selected }) {
+  return <div className="floor-map" aria-label={`Prototype map of N79 level ${floor}`}><div className="map-north">N ↑</div><div className="map-corridor horizontal"/><div className="map-corridor vertical-line"/>
+    {floorData[floor].map(([name,room],i)=><div key={name} className={`map-room room-${i}${selected === name ? ' destination' : ''}`}><b>{room}</b><span>{name}</span></div>)}
+    <div className="map-core lift">↕<span>Lift</span></div><div className="map-core stairs">⌁<span>Stairs</span></div><div className="map-core toilets">WC<span>Toilets</span></div>{selected && <div className="route-line"><i/><i/><i/></div>}<div className="you-are-here"><i/>You are here</div>
+  </div>
+}
+
+function Navigator() {
+  const [floor, setFloor] = useState(0), [query, setQuery] = useState(''), [destination, setDestination] = useState(''), [accessible, setAccessible] = useState(false)
+  const allPlaces = Object.entries(floorData).flatMap(([level,places]) => places.map(([name,room])=>({name,room,floor:Number(level)})))
+  const results = query ? allPlaces.filter(p => `${p.name} ${p.room}`.toLowerCase().includes(query.toLowerCase())).slice(0,6) : []
+  const choose = p => { setDestination(p.name); setFloor(p.floor); setQuery('') }
+  return <section className="navigator-page"><aside className="nav-panel"><p className="campus-label">N79 Indoor Navigation</p><h1>Where do you need to go?</h1><p className="nav-intro">Search for a room, facility or learning space.</p>
+    <div className="search-box"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search N79" aria-label="Search N79 destinations"/>{query && <button onClick={()=>setQuery('')} aria-label="Clear search">×</button>}</div>
+    {results.length > 0 && <div className="search-results">{results.map(p=><button key={`${p.floor}-${p.name}`} onClick={()=>choose(p)}><span><b>{p.name}</b><small>Level {p.floor} · {p.room}</small></span><Arrow/></button>)}</div>}
+    <div className="floor-select"><span>Choose a level</span><div>{Object.keys(floorData).map(level=><button className={floor===Number(level)?'active':''} key={level} onClick={()=>{setFloor(Number(level));setDestination('')}}>{level}</button>)}</div></div>
+    <div className="places"><h2>Level {floor} destinations</h2>{floorData[floor].map(([name,room])=><button className={destination===name?'active':''} key={name} onClick={()=>setDestination(name)}><span><b>{name}</b><small>{room}</small></span><Arrow/></button>)}</div>
+    <label className="accessible-toggle"><input type="checkbox" checked={accessible} onChange={e=>setAccessible(e.target.checked)}/><span><b>Accessible route</b><small>Use lifts and step-free paths</small></span></label></aside>
+    <div className="map-panel"><div className="map-toolbar"><div><span>Henry Smerdon Building</span><b>N79 · Level {floor}</b></div><span className="prototype-badge">Prototype floor layout</span></div><FloorMap floor={floor} selected={destination}/>
+      {destination && <div className="directions"><div><span className="route-icon">➜</span><p><small>ROUTE TO</small><b>{destination}</b><span>About {floor === 0 ? '2' : floor + 2} min · {accessible ? 'Lift route' : 'Fastest route'}</span></p></div><ol><li><b>1</b>Continue along the central atrium</li><li><b>2</b>{floor === 0 ? 'Follow the room signs' : accessible ? `Take the lift to Level ${floor}` : `Take the stairs to Level ${floor}`}</li><li><b>3</b>Your destination will be highlighted</li></ol><button onClick={()=>setDestination('')}>End route</button></div>}
+      <p className="map-disclaimer">Prototype navigation concept only. Follow official building signage and emergency instructions while on campus.</p></div></section>
+}
+
 function App() {
   const getPage = () => window.location.hash.slice(1) || 'home'
   const [page, setPage] = useState(getPage)
   useEffect(() => { const update = () => setPage(getPage()); window.addEventListener('hashchange', update); return () => window.removeEventListener('hashchange', update) }, [])
   const navigate = (target) => { window.location.hash = target; setPage(target); window.scrollTo({top:0,behavior:'smooth'}) }
-  return <main><Header navigate={navigate} page={page}/>{page === 'login' ? <Login navigate={navigate}/> : page === 'about' ? <About navigate={navigate}/> : <Home navigate={navigate}/>}</main>
+  useEffect(() => { document.title = page === 'navigate' ? 'Navigate N79 | Griffith University' : page === 'about' ? 'About N79 | Griffith University' : page === 'login' ? 'Student Login | N79 Navigator' : 'N79 Navigator | Griffith University' }, [page])
+  return <main><Header navigate={navigate} page={page}/>{page === 'login' ? <Login navigate={navigate}/> : page === 'about' ? <About navigate={navigate}/> : page === 'navigate' ? <Navigator/> : <Home navigate={navigate}/>}</main>
 }
 export default App

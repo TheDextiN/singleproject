@@ -6,7 +6,7 @@ N79 Navigator is a React prototype for finding rooms, laboratories and useful ca
 
 - Level 1–5 floor-plan directory
 - Searchable room and laboratory information
-- Clickable room markers and responsive detail panels
+- Clickable room markers, responsive detail panels and room photo galleries
 - About N79 page based on published Griffith information
 - Griffith Wi-Fi connection guide
 - Prototype student, staff and guest login screen
@@ -17,7 +17,7 @@ N79 Navigator is a React prototype for finding rooms, laboratories and useful ca
 ```text
 src/
 ├── assets/
-│   ├── branding/       Official logo asset
+│   ├── branding/       Official desktop logo and compact mobile symbol
 │   ├── floor-plans/    N79 Level 1–5 plan images
 │   ├── images/         Optimised website photography
 │   └── legacy/         Unused starter/source assets kept for reference
@@ -50,8 +50,10 @@ npm.cmd run build
 - Login is a visual prototype. It does not send or store credentials and must be connected to an approved Griffith authentication service before release.
 - The working student demo uses `s123456` with password `123456`. These values are visible in front-end code and are only for classroom demonstration.
 - A successful demo login saves only an authentication flag in `localStorage`, so it remains active across pages and browser restarts until Logout is selected.
+- Successful login opens Rooms & Labs; the existing Student Area remains available through Profile in the header.
 - Room names, references and hotspot positions should be checked against approved N79 building records before production use.
-- Current room visuals are floor-plan references. Replace them with approved room photographs in `src/assets/rooms/` when available.
+- Supplied room photographs are optimised and grouped in `src/assets/rooms/`; room labels and photo-to-marker groupings should still be checked against approved N79 building records before release.
+- Interface colours use Griffith red `#E51F30`, black, white and supporting greys from the supplied visual identity guide.
 - The maps are for room discovery only, not emergency evacuation.
 
 ## Information sources

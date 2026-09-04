@@ -17,8 +17,12 @@ export default function HomePage({ navigate, isLoggedIn }) {
         </p>
 
         <div className="home-actions">
-          <button className="primary" onClick={() => navigate('navigate')}>
-            Explore rooms &amp; labs <ArrowIcon />
+          {/* The main action becomes the room directory after a user signs in. */}
+          <button
+            className="primary"
+            onClick={() => navigate(isLoggedIn ? 'navigate' : 'login')}
+          >
+            {isLoggedIn ? 'Explore rooms & labs' : 'Login'} <ArrowIcon />
           </button>
           <button className="secondary-light" onClick={() => navigate('wifi')}>
             Connect to campus Wi-Fi
@@ -26,15 +30,19 @@ export default function HomePage({ navigate, isLoggedIn }) {
         </div>
 
         <div className="home-quick">
-          <button onClick={() => navigate('about')}>
-            <b>About N79</b>
-            <span>Learn about the building →</span>
+          {/* This shortcut changes from building information to the signed-in profile. */}
+          <button onClick={() => navigate(isLoggedIn ? 'student' : 'about')}>
+            <b>{isLoggedIn ? 'My profile' : 'About N79'}</b>
+            <span>{isLoggedIn ? 'Open your student area →' : 'Learn about the building →'}</span>
           </button>
-          {/* The account shortcut reflects the same login state as the header. */}
-          <button onClick={() => navigate(isLoggedIn ? 'student' : 'login')}>
-            <b>{isLoggedIn ? 'My profile' : 'Login'}</b>
-            <span>{isLoggedIn ? 'Open your student area →' : 'Student, staff or guest →'}</span>
-          </button>
+          <a
+            href="https://www.griffith.edu.au/about-griffith/campuses-facilities/nathan"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <b>Nathan campus</b>
+            <span>Open the official campus page ↗</span>
+          </a>
         </div>
       </div>
     </section>

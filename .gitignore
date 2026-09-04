@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Temporary source pack; production-ready copies live in src/assets.
+updates/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

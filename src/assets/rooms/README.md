@@ -1,5 +1,9 @@
 # Room photographs
 
-Place approved N79 room and laboratory photographs in this folder.
+The supplied N79 photographs are organised into one folder per map point:
+`room-01/` through `room-15/`. Each image has been resized and compressed for
+the website while the original files remain in the temporary `updates` folder.
 
-After adding a photo, import it in `src/data/rooms.js` and replace the temporary floor-plan image assigned to the matching room. Use short descriptive filenames such as `high-bay-lab.jpg`, and add meaningful alternative text in the room data when photo-specific alt text is introduced.
+`src/data/roomPhotos.js` automatically groups files from these folders, so a new
+`.jpg` can be added to the relevant folder without writing another import. Keep
+the `photo-01.jpg`, `photo-02.jpg` naming pattern to control gallery order.

@@ -3,6 +3,7 @@ import level2Plan from '../assets/floor-plans/level-2.png'
 import level3Plan from '../assets/floor-plans/level-3.png'
 import level4Plan from '../assets/floor-plans/level-4.png'
 import level5Plan from '../assets/floor-plans/level-5.png'
+import { roomPhotos } from './roomPhotos'
 
 /** Floor-plan image used for each level selector. */
 export const floorPlans = {
@@ -27,25 +28,115 @@ export const floorMarkers = {
 }
 
 /**
- * Details shown in the room directory and information panel.
- * The plan image acts as a temporary visual until verified room photos are supplied.
+ * Details shown in the room directory and information panel. The supplied
+ * photos are grouped by the numbered points on each floor plan.
  */
 export const rooms = {
-  1: { name: 'Central Atrium', code: 'N79 Level 1', type: 'Building hub', image: level1Plan, detail: 'The main shared space connecting the lower levels, teaching rooms and building facilities.' },
-  2: { name: 'Engineering High-Bay Lab', code: 'N79 1.10', type: 'Specialist laboratory', image: level1Plan, detail: 'A 10-metre-high engineering laboratory designed for large-scale testing, demonstrations and drone activities.' },
-  3: { name: 'Materials Testing Lab', code: 'N79 1.12', type: 'Engineering laboratory', image: level1Plan, detail: 'A practical teaching space for testing materials, structures and engineering solutions.' },
-  4: { name: 'Engineering Workshop', code: 'N79 1.15', type: 'Workshop', image: level1Plan, detail: 'A hands-on workshop supporting fabrication, prototyping and practical engineering activities.' },
-  5: { name: 'Student Lounge and Kitchen', code: 'N79 Level 2', type: 'Student facility', image: level2Plan, detail: 'An informal space for breaks, group discussion and multidisciplinary collaboration.' },
-  6: { name: 'Engineering Lecture Theatre', code: 'N79 2.05', type: 'Teaching room', image: level2Plan, detail: 'A flexible teaching room used for engineering, technology and aviation classes and presentations.' },
-  7: { name: 'West Collaboration Zone', code: 'N79 Level 2 West', type: 'Collaboration space', image: level2Plan, detail: 'Open project space for student teamwork, informal learning and industry conversations.' },
-  8: { name: 'Aviation Learning Studio', code: 'N79 Level 2', type: 'Teaching studio', image: level2Plan, detail: 'A technology-enabled studio supporting aviation teaching and collaborative learning.' },
-  9: { name: 'Planning and Design Studio', code: 'N79 3.04', type: 'Design studio', image: level3Plan, detail: 'A flexible flat-floor studio for design work, scenario planning and project-based learning.' },
-  10: { name: 'Industry Project Zone', code: 'N79 Level 4', type: 'Industry space', image: level4Plan, detail: 'Meeting and project spaces where students can collaborate with and present to industry partners.' },
-  11: { name: 'Makerspace', code: 'N79 Level 4 West', type: 'Prototyping lab', image: level4Plan, detail: 'A practical prototyping environment for developing and testing new ideas.' },
-  12: { name: 'VR and AR Simulation Studio', code: 'N79 Level 4', type: 'Simulation studio', image: level4Plan, detail: 'Virtual and augmented reality facilities for problem solving, design simulation and training exercises.' },
-  13: { name: 'Cyber Security Lab', code: 'N79 5.10', type: 'Computer laboratory', image: level5Plan, detail: 'A specialised technology lab supporting cyber security teaching, cryptography and secure communications.' },
-  14: { name: 'Computer Learning Lab', code: 'N79 5.16', type: 'Computer laboratory', image: level5Plan, detail: 'A modern computer laboratory for Information Technology classes and practical activities.' },
-  15: { name: 'IT Teaching Lab', code: 'N79 5.17', type: 'Teaching laboratory', image: level5Plan, detail: 'A technology-rich teaching room for software, computing and collaborative class work.' },
+  1: {
+    name: 'Central Atrium',
+    code: 'N79 Level 1',
+    type: 'Building hub',
+    images: roomPhotos[1],
+    detail: 'The main shared space connecting teaching rooms, laboratories and building facilities.',
+  },
+  2: {
+    name: 'Engineering and Aviation Showcase',
+    code: 'N79 Level 1',
+    type: 'Engineering learning space',
+    images: roomPhotos[2],
+    detail: 'A technology-rich space used for practical engineering demonstrations, aviation learning and student projects.',
+  },
+  3: {
+    name: 'Virtual Reality Studio',
+    code: 'N79 1.10',
+    type: 'Immersive learning studio',
+    images: roomPhotos[3],
+    detail: 'An immersive teaching space supporting virtual-reality demonstrations, simulation and collaborative learning.',
+  },
+  4: {
+    name: 'Disaster Management Suite',
+    code: 'N79 Level 1',
+    type: 'Simulation and project space',
+    images: roomPhotos[4],
+    detail: 'A specialist suite for disaster and emergency management teaching, scenario exercises and industry collaboration.',
+  },
+  5: {
+    name: 'Flexible Teaching Studios',
+    code: 'N79 2.03A–2.03B',
+    type: 'Teaching studio',
+    images: roomPhotos[5],
+    detail: 'Flexible rooms that can support classes, presentations, group work and technology-enabled demonstrations.',
+  },
+  6: {
+    name: 'Makerspace',
+    code: 'N79 Level 2',
+    type: 'Prototyping laboratory',
+    images: roomPhotos[6],
+    detail: 'A hands-on makerspace with practical work areas and equipment for building, testing and refining ideas.',
+  },
+  7: {
+    name: 'Print Lab',
+    code: 'N79 Level 2',
+    type: 'Specialist laboratory',
+    images: roomPhotos[7],
+    detail: 'A specialist print and production space supporting practical project work and prototype development.',
+  },
+  8: {
+    name: 'Engineering Teaching Laboratories',
+    code: 'N79 2.13A–2.15B',
+    type: 'Teaching laboratories',
+    images: roomPhotos[8],
+    detail: 'A collection of adaptable laboratories for practical classes, technical exercises and supervised project work.',
+  },
+  9: {
+    name: 'Level 3 Learning Commons',
+    code: 'N79 Level 3',
+    type: 'Learning and collaboration space',
+    images: roomPhotos[9],
+    detail: 'An open level with informal learning areas designed for individual study, group work and collaboration.',
+  },
+  10: {
+    name: 'Level 4 Collaboration Hub',
+    code: 'N79 Level 4',
+    type: 'Student collaboration space',
+    images: roomPhotos[10],
+    detail: 'Comfortable shared areas for project meetings, informal study and conversation between classes.',
+  },
+  11: {
+    name: 'Cyber-Physical and Mechatronics Labs',
+    code: 'N79 4.07–4.10',
+    type: 'Technology laboratories',
+    images: roomPhotos[11],
+    detail: 'Specialist laboratories supporting cyber-physical systems, mechatronics and practical technology learning.',
+  },
+  12: {
+    name: 'Computing and Networking Labs',
+    code: 'N79 4.15–4.19',
+    type: 'Computer laboratories',
+    images: roomPhotos[12],
+    detail: 'Computer, networking and flight-learning spaces equipped for practical classes and technical simulations.',
+  },
+  13: {
+    name: 'Level 5 Science Laboratory',
+    code: 'N79 Level 5',
+    type: 'Science teaching laboratory',
+    images: roomPhotos[13],
+    detail: 'A modern laboratory environment supporting supervised science teaching and practical activities.',
+  },
+  14: {
+    name: 'Chemistry Laboratories',
+    code: 'N79 Level 5',
+    type: 'Chemistry teaching laboratories',
+    images: roomPhotos[14],
+    detail: 'Purpose-built chemistry laboratories with teaching benches, demonstration equipment and safe practical work areas.',
+  },
+  15: {
+    name: 'Bioscience Laboratories',
+    code: 'N79 Level 5',
+    type: 'Bioscience teaching laboratories',
+    images: roomPhotos[15],
+    detail: 'Teaching laboratories configured for bioscience practicals, demonstrations and collaborative investigation.',
+  },
 }
 
 /**

@@ -49,11 +49,11 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  // A successful login saves the account until the user explicitly logs out.
+  // A successful login saves the account and opens the main room directory.
   const login = () => {
     window.localStorage.setItem('n79-demo-auth', 'student')
     setIsLoggedIn(true)
-    navigate('student')
+    navigate('navigate')
   }
 
   // This is the only function that removes the persistent demo session.

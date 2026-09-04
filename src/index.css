@@ -3,8 +3,8 @@
 /* Browser-level defaults shared by every page. */
 :root {
   font-family: 'DM Sans', Arial, sans-serif;
-  color: #0c0c0c;
-  background: #870d35;
+  color: #000;
+  background: #e51f30;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -38,6 +38,6 @@ svg {
 }
 
 ::selection {
-  color: #000;
-  background: #ffdf00;
+  color: #fff;
+  background: #e51f30;
 }

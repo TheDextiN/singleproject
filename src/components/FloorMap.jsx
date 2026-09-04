@@ -6,10 +6,10 @@ import { floorMarkers, floorPlans, rooms } from '../data/rooms'
  */
 export default function FloorMap({ floor, selectedRoom, onSelectRoom }) {
   return (
-    <div className="floor-map real-plan" aria-label={`N79 floor plan level ${floor}`}>
+    <div className="floor-map real-plan" aria-label={`Interactive N79 Level ${floor} map`}>
       <img
         src={floorPlans[floor]}
-        alt={`N79 Level ${floor} floor plan showing numbered rooms and laboratories`}
+        alt={`Interactive N79 Level ${floor} map showing numbered rooms and laboratories`}
       />
 
       {/* This loop places every clickable room marker at its saved x/y position. */}

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import n79BuildingBackground from '../assets/images/n79-building-background.jpg'
 import ArrowIcon from '../components/ArrowIcon'
 import FloorMap from '../components/FloorMap'
 import RoomDetailsPanel from '../components/RoomDetailsPanel'
@@ -101,10 +102,14 @@ export default function RoomsPage() {
 
       </aside>
 
-      <div className="map-panel">
+      {/* The supplied N79 photograph creates a faded backdrop behind the map. */}
+      <div
+        className="map-panel"
+        style={{ '--map-background-image': `url(${n79BuildingBackground})` }}
+      >
         <div className="map-toolbar">
           <div><span>Henry Smerdon Building</span><b>N79 · Level {floor}</b></div>
-          <span className="prototype-badge">Project floor plan</span>
+          <span className="plan-type-badge">Interactive level map</span>
         </div>
         <FloorMap
           floor={floor}
@@ -112,13 +117,15 @@ export default function RoomsPage() {
           onSelectRoom={setSelectedRoom}
         />
         <p className="map-disclaimer">
-          Use this project map for room information only. Always follow official
+          Use this interactive level map for room information only. Always follow official
           building signage and emergency instructions while on campus.
         </p>
       </div>
 
+      {/* key starts each newly selected room at its first gallery photo. */}
       {selectedRoom && (
         <RoomDetailsPanel
+          key={selectedRoom}
           roomNumber={selectedRoom}
           floor={floor}
           room={rooms[selectedRoom]}

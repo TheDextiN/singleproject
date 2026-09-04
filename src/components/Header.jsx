@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import griffithLogo from '../assets/branding/griffith-university-logo.svg'
+import desktopLogo from '../assets/branding/griffith-logo-desktop.png'
+import mobileLogo from '../assets/branding/griffith-symbol-mobile.png'
 
 /** Main navigation shared by every page. */
 export default function Header({ navigate, page, isLoggedIn, onLogout }) {
@@ -31,7 +32,11 @@ export default function Header({ navigate, page, isLoggedIn, onLogout }) {
         onClick={() => goTo('home')}
         aria-label="Return to N79 Navigator home"
       >
-        <img src={griffithLogo} alt="Griffith University" />
+        {/* picture swaps the full wordmark for the supplied logo's compact symbol. */}
+        <picture>
+          <source media="(max-width: 780px)" srcSet={mobileLogo} />
+          <img src={desktopLogo} alt="Griffith University" />
+        </picture>
       </button>
 
       <button
@@ -49,7 +54,12 @@ export default function Header({ navigate, page, isLoggedIn, onLogout }) {
       <nav className={menuOpen ? 'open' : ''} aria-label="Main navigation">
         <button className={navClass('home')} onClick={() => goTo('home')}>Home</button>
         <button className={navClass('about')} onClick={() => goTo('about')}>About N79</button>
-        <button className={navClass('navigate')} onClick={() => goTo('navigate')}>Rooms &amp; Labs</button>
+        {/* The room directory is added to the menu only for signed-in users. */}
+        {isLoggedIn && (
+          <button className={navClass('navigate')} onClick={() => goTo('navigate')}>
+            Rooms &amp; Labs
+          </button>
+        )}
         <button className={navClass('wifi')} onClick={() => goTo('wifi')}>Wi-Fi guide</button>
         <a
           href="https://www.griffith.edu.au/about-griffith/campuses-facilities/nathan"
